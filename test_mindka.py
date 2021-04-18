@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
-# Created for utr-lab2 @ FER (MinDka.py)
+# Created for utr-lab2 @ FER
 # but should be easily expandable
+# 
+# Dirs in root test dir are filtered based on dir name prefix.
+#   Can be "" to apply no filter.
 
 # usage: ./program.py
 # usage: ./program.py <tests_dir>
@@ -13,20 +16,22 @@ import time
 import sys
 import shutil
 
-infile_name = 't.ul'
-outfile_name = 't.iz'
-tests_dir = 'lab2_primjeri[1]'
-prog = 'MinDka.py'
-_runner = ['py', 'python3', 'python']
+INFILE_NAME = 't.ul'
+OUTFILE_NAME = 't.iz'
+TESTS_DIR = 'lab2_primjeri[1]'
+TEST_DIR_PREFIX = 'test'
+PROG = 'MinDka.py'
+_RUNNER = ['py', 'python3', 'python']
 
-# 
+
+# Cmd args 'parser'
 if len(sys.argv) >= 2:
-	tests_dir = sys.argv[1]
-	if tests_dir[-1] in ['/', '\\']:
-		tests_dir = tests_dir[:-1]
+	TESTS_DIR = sys.argv[1]
+	if TESTS_DIR[-1] in ['/', '\\']:
+		TESTS_DIR = TESTS_DIR[:-1]
 
 if len(sys.argv) >= 3:
-	prog = sys.argv[2]
+	PROG = sys.argv[2]
 
 if len(sys.argv) >= 4:
 	print(
@@ -39,26 +44,29 @@ if len(sys.argv) >= 4:
 
 # Detect python command
 i = 0
-while i < len(_runner):
-	if shutil.which(_runner[0]) == None:
-		del _runner[0]
+while i < len(_RUNNER):
+	if shutil.which(_RUNNER[0]) == None:
+		del _RUNNER[0]
 	i += 1
 
-if len(_runner) == 0:
+if len(_RUNNER) == 0:
 	print('> Why the fucc are you even trying to do this in python if you don\'t have it installed ?')
 	exit(1)
 
 
+# Begin tests
 passed = 0
 total_time = 0
-dirs = os.listdir(tests_dir)
+dirs = os.listdir(TESTS_DIR)
 
-print(f'> Starting tests... ({prog} @ {tests_dir})')
+print(f'> Starting tests... ({PROG} @ {TESTS_DIR})')
 
 for tst in dirs:
+	if not tst.startswith(TEST_DIR_PREFIX):
+		continue
 
-	with open(f'{tests_dir}/{tst}/{infile_name}') as infile, open(f'{tests_dir}/{tst}/{outfile_name}') as outfile:
-		progpipe = subp.Popen(f'{_runner[0]} {prog}', stdin=infile, stdout=subp.PIPE, universal_newlines=True)
+	with open(f'{TESTS_DIR}/{tst}/{INFILE_NAME}') as infile, open(f'{TESTS_DIR}/{tst}/{OUTFILE_NAME}') as outfile:
+		progpipe = subp.Popen(f'{_RUNNER[0]} {PROG}', stdin=infile, stdout=subp.PIPE, universal_newlines=True)
 
 		start_time = time.time()
 
