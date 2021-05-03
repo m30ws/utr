@@ -2,6 +2,8 @@
 
 # Created for utr-lab2 @ FER
 # but should be easily expandable
+#
+# by: m30ws (04/2021)
 # 
 # Dirs in root test dir are filtered based on dir name prefix.
 #   Can be "" to apply no filter.

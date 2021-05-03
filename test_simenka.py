@@ -1,4 +1,5 @@
 # Created for utr-lab1 @ FER (SimEnka.py)
+# by: m30ws (03/2021)
 
 import os
 import subprocess as sub

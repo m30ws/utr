@@ -3,7 +3,7 @@
 # Created for utr-lab3 @ FER
 # but should be easily expandable
 #
-# by: m30ws
+# by: m30ws (05/2021)
 # 
 # Dirs in root test dir are filtered based on dir name prefix.
 #   Can be "" to apply no filter.
@@ -22,9 +22,11 @@ import ntpath
 INFILE_NAME = 'primjer.in'
 OUTFILE_NAME = 'primjer.out'
 TESTS_DIR = 'lab3_primjeri[1]'
-TEST_DIR_PREFIX = 'test'
+TEST_DIR_PREFIX = 'test' # ex. test02
 PROG = 'SimPa.py'
+
 _RUNNER = ['']
+_ignore_option = '-'
 
 def print_help():
 	fname = ntpath.basename(sys.argv[0])
@@ -37,16 +39,16 @@ def print_help():
 
 # Cmd args 'parser'
 if len(sys.argv) >= 2:
-	TESTS_DIR = sys.argv[1]
+	TESTS_DIR = sys.argv[1] if sys.argv[1] != _ignore_option else TESTS_DIR
 	if TESTS_DIR[-1] in ['/', '\\']:
 		TESTS_DIR = TESTS_DIR[:-1]
 
 if len(sys.argv) >= 3:
-	PROG = sys.argv[2]
+	PROG = sys.argv[2] if sys.argv[2] != _ignore_option else PROG
 
 if len(sys.argv) == 5:
-	INFILE_NAME = sys.argv[3]
-	OUTFILE_NAME = sys.argv[4]
+	INFILE_NAME = sys.argv[3] if sys.argv[3] != _ignore_option else INFILE_NAME
+	OUTFILE_NAME = sys.argv[4] if sys.argv[4] != _ignore_option else OUTFILE_NAME
 
 if len(sys.argv) == 4 or len(sys.argv) > 5:
 	print_help()
