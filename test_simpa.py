@@ -8,9 +8,14 @@
 # Dirs in root test dir are filtered based on dir name prefix.
 #   Can be "" to apply no filter.
 
+# Usage & examples:
 # usage: ./program
 # usage: ./program <tests_dir>
 # usage: ./program <tests_dir> <test_program_name>
+#          ./program - SimPa.jar
+#          ./program - SimPa.exe
+# default: ./program lab3_primjeri[1] SimPa.py
+# default: ./program lab3_primjeri[1] SimPa.py primjer.in primjer.out
 
 import os
 import subprocess as subp
@@ -63,6 +68,12 @@ elif PROG.endswith('.jar'): # Detect java command
 		print('> Why the fucc are you even trying to do this in java if you don\'t have it installed and/or in path ?')
 		exit(1)
 	_RUNNER = ['java -jar']
+
+elif PROG.endswith('.java'):
+	print('\nI\'m sorry I\'m dumb, I don\'t know how to compile .java yet :\'( , use .jar')
+	print('ex. in IntelliJ IDEA: File > Project Structure > Artifacts > add new')
+	print('After that Build menu > Build Artifacts')
+	exit(1)
 
 else: # Detect python command
 	_RUNNER = ['py', 'python3', 'python']
